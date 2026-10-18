@@ -1,0 +1,23 @@
+FROM postgres:15
+
+# Install required packages
+RUN apt-get update && apt-get install -y \
+    postgresql-client \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy initialization scripts
+COPY scripts/init_db.sh /docker-entrypoint-initdb.d/
+RUN chmod +x /docker-entrypoint-initdb.d/init_db.sh
+
+# Set working directory
+WORKDIR /app
+
+# Copy migration files
+COPY migrations /app/migrations
+COPY scripts /app/scripts
+
+# Make the script executable
+RUN chmod +x /app/scripts/init_db.sh
+
+# Run the initialization script
+CMD ["/app/scripts/init_db.sh"] 

@@ -1,0 +1,30 @@
+server:
+  port: 8081
+  mode: debug
+  read_timeout: 30
+  write_timeout: 30
+  max_request_size: 10485760  # 10MB
+
+database:
+  host: localhost  # 本地开发环境
+  port: 5433      # Docker 映射的端口
+  username: postgres
+  password: postgres
+  dbname: yfj
+  max_idle_conns: 10
+  max_open_conns: 100
+  conn_max_lifetime: 3600
+
+yoyo:
+  url: http://localhost:5001  # 本地运行的 YOLO 服务
+  timeout: 30  # 请求超时时间（秒）
+  min_confidence: 0.6  # 最小置信度阈值
+  max_image_size: 5242880  # 5MB
+
+log:
+  level: debug
+  filename: ./logs/app.log
+  max_size: 100
+  max_backups: 7
+  max_age: 30
+  compress: true 
